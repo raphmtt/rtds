@@ -8,7 +8,7 @@ function Introduction() {
       </h1>
       <p className="mt-4 text-lg text-muted-foreground">
         A versioned, installable landing/sites design system built with React,
-        Tailwind CSS v4, shadcn/ui compose path, and CSS variable tokens.
+        Tailwind CSS v4, 1:1 Base UI wrappers, and CSS variable tokens.
       </p>
 
       <section className="mt-8">

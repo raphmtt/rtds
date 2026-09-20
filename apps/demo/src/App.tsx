@@ -20,6 +20,45 @@ import {
   ICON_SIZE_FEATURE,
   useBrand,
   useTheme,
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+  Checkbox,
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  Label,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  Separator,
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+  Switch,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+  TextLink,
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
 } from '@rtds/ui';
 import { brandLabels } from '@rtds/tokens';
 import {
@@ -41,6 +80,7 @@ const Logo = () => (
 
 const navItems = [
   { label: 'Button', href: '#button-poc' },
+  { label: 'Primitives', href: '#primitives' },
   { label: 'Features', href: '#features' },
   { label: 'Stats', href: '#stats' },
   { label: 'FAQ', href: '#faq' },
@@ -158,6 +198,121 @@ function Landing() {
           </Container>
         </Section>
 
+        <Section id="primitives">
+          <Container>
+            <h2 className="font-heading text-3xl font-bold text-center mb-3">Primitives</h2>
+            <p className="text-muted-foreground text-center max-w-2xl mx-auto mb-8">
+              Remaining interactive wrappers now sit on Base UI. Open dialogs and sheets, switch
+              tabs, and toggle controls — they restyle with the header playground theme.
+            </p>
+
+            <div className="grid gap-8 md:grid-cols-2">
+              <div className="space-y-4 rounded-lg border p-6">
+                <h3 className="font-heading text-lg font-semibold">Dialog & Sheet</h3>
+                <div className="flex flex-wrap gap-3">
+                  <Dialog>
+                    <DialogTrigger render={<Button variant="outline" />}>Open dialog</DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle>Base UI dialog</DialogTitle>
+                        <DialogDescription>
+                          Focus stays inside the popup. Close with the button, overlay, or Escape.
+                        </DialogDescription>
+                      </DialogHeader>
+                      <DialogFooter>
+                        <DialogClose render={<Button type="button" variant="outline" />}>
+                          Close
+                        </DialogClose>
+                      </DialogFooter>
+                    </DialogContent>
+                  </Dialog>
+                  <Sheet>
+                    <SheetTrigger render={<Button variant="secondary" />}>Open sheet</SheetTrigger>
+                    <SheetContent>
+                      <SheetHeader>
+                        <SheetTitle>Navigation sheet</SheetTitle>
+                        <SheetDescription>
+                          Drawer from the right edge. Swipe or use the close control.
+                        </SheetDescription>
+                      </SheetHeader>
+                    </SheetContent>
+                  </Sheet>
+                </div>
+              </div>
+
+              <div className="space-y-4 rounded-lg border p-6">
+                <h3 className="font-heading text-lg font-semibold">Select & Tabs</h3>
+                <Select defaultValue="atlas">
+                  <SelectTrigger aria-label="Example select">
+                    <SelectValue placeholder="Choose a niche" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="atlas">Atlas</SelectItem>
+                    <SelectItem value="folio">Folio</SelectItem>
+                    <SelectItem value="maison">Maison</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Tabs defaultValue="one">
+                  <TabsList>
+                    <TabsTrigger value="one">One</TabsTrigger>
+                    <TabsTrigger value="two">Two</TabsTrigger>
+                    <TabsTrigger value="three">Three</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="one">First panel.</TabsContent>
+                  <TabsContent value="two">Second panel.</TabsContent>
+                  <TabsContent value="three">Third panel.</TabsContent>
+                </Tabs>
+              </div>
+
+              <div className="space-y-4 rounded-lg border p-6">
+                <h3 className="font-heading text-lg font-semibold">Checkbox, Switch, Tooltip</h3>
+                <div className="flex items-center gap-2">
+                  <Checkbox id="demo-check" defaultChecked />
+                  <Label htmlFor="demo-check">Accept tokens</Label>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Switch id="demo-switch" defaultChecked />
+                  <Label htmlFor="demo-switch">Dark-ready</Label>
+                </div>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger render={<Button variant="ghost" size="sm" />}>
+                      Hover me
+                    </TooltipTrigger>
+                    <TooltipContent>Token-styled tooltip</TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
+
+              <div className="space-y-4 rounded-lg border p-6">
+                <h3 className="font-heading text-lg font-semibold">Accordion, Avatar, Link</h3>
+                <div className="flex items-center gap-3">
+                  <Avatar>
+                    <AvatarImage alt="Ada" src="https://i.pravatar.cc/80?img=5" />
+                    <AvatarFallback>AL</AvatarFallback>
+                  </Avatar>
+                  <TextLink href="#faq">Read the FAQ</TextLink>
+                </div>
+                <Separator />
+                <Accordion className="w-full">
+                  <AccordionItem value="a">
+                    <AccordionTrigger>What changed?</AccordionTrigger>
+                    <AccordionContent>
+                      Interactive primitives wrap Base UI. Visuals still use semantic tokens.
+                    </AccordionContent>
+                  </AccordionItem>
+                  <AccordionItem value="b">
+                    <AccordionTrigger>Is Radix gone?</AccordionTrigger>
+                    <AccordionContent>
+                      Yes from `@rtds/ui` sources. Button was the reference; this inventory matches it.
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </div>
+            </div>
+          </Container>
+        </Section>
+
         <Section id="features" tone="muted">
           <FeatureGrid
             title="Everything you need"
@@ -192,7 +347,7 @@ function Landing() {
             <FeatureGridItem
               icon={<Icon icon={Sparkles} size={ICON_SIZE_FEATURE} />}
               title="Modern Stack"
-              description="React 19, Tailwind v4, shadcn/ui compose path, and Radix primitives."
+              description="React 19, Tailwind v4, and 1:1 Base UI wrappers styled with CSS tokens."
             />
           </FeatureGrid>
         </Section>

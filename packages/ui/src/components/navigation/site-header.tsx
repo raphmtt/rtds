@@ -70,11 +70,13 @@ const SiteHeader = React.forwardRef<HTMLElement, SiteHeaderProps>(
                 </a>
               )}
 
-              <Sheet open={isOpen} onOpenChange={setIsOpen}>
-                <SheetTrigger asChild className="md:hidden">
-                  <Button variant="ghost" size="icon" aria-label="Open menu">
-                    <Icon icon={Menu} />
-                  </Button>
+              <Sheet open={isOpen} onOpenChange={setIsOpen} side="right">
+                <SheetTrigger
+                  render={
+                    <Button variant="ghost" size="icon" className="md:hidden" aria-label="Open menu" />
+                  }
+                >
+                  <Icon icon={Menu} />
                 </SheetTrigger>
                 <SheetContent side="right" className="w-[300px]">
                   <SheetTitle className="sr-only">Navigation Menu</SheetTitle>

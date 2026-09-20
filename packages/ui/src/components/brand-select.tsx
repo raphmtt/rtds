@@ -23,7 +23,12 @@ export function BrandSelect() {
   const { brand, setBrand } = useBrand();
 
   return (
-    <Select value={brand} onValueChange={(value) => setBrand(value as Brand)}>
+    <Select
+      value={brand}
+      onValueChange={(value) => {
+        if (value) setBrand(value as Brand);
+      }}
+    >
       <SelectTrigger className="w-[160px]" aria-label="Demo playground theme (real apps ship one theme file)">
         <SelectValue placeholder="Playground theme" />
       </SelectTrigger>
