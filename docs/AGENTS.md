@@ -14,6 +14,17 @@ Instructions for AI agents working with this design system.
 
 ## After UI Edits
 
+A public `@rtds/ui` change is **not done** until Storybook matches it.
+
+| Change | Required follow-up |
+| --- | --- |
+| New public export | New story file under `apps/storybook/stories/` (or a clearly named story in an existing family file). `Default` + variants/states that exist on the API. |
+| Updated props, variants, or behavior | Update the existing story so controls/examples reflect the new API. Do not leave a story that still shows the old pattern (`asChild`, removed props, …). |
+| Removed or renamed export | Delete or rename the story in the same change. |
+| Compound parts (`DialogTrigger`, …) | Keep them inside the parent story; do not add a story per leaked part. |
+
+Demo (`apps/demo`) is a **composed landing**, not a full catalog. Update it when the change is visible in a landing flow (header/footer, marketing block, form, primitive already on `#primitives`). Layout utilities (`Stack`, `Grid`, `Bleed`) live in Storybook unless the landing needs them.
+
 **Always run these commands:**
 
 ```bash
@@ -22,7 +33,7 @@ pnpm typecheck
 pnpm build
 ```
 
-Fix all errors before committing.
+Fix all errors before committing. Spot-check the touched stories (`pnpm --filter storybook dev`).
 
 ---
 
@@ -43,6 +54,7 @@ Fix all errors before committing.
 - ✗ Don't re-export Base UI `Root` / `Trigger` / namespaces from `@rtds/ui`
 - ✗ Don't override component internal styles in consumer code
 - ✗ Don't modify components in `apps/demo` — only use exports from `@rtds/ui`
+- ✗ Don't ship a `@rtds/ui` public API change without a matching Storybook update in the same PR
 
 ### Dark Mode
 
@@ -122,7 +134,9 @@ export function MyComponent({
 export * from './components/my-component';
 ```
 
-### 3. Create Story
+### 3. Create or update Story
+
+Same PR as the component. Titles: `Foundations/…`, `Layout/…`, `Navigation/…`, `Marketing/…`. Import only from `@rtds/ui`.
 
 ```tsx
 // apps/storybook/stories/MyComponent.stories.tsx
@@ -160,6 +174,8 @@ pnpm typecheck
 pnpm build
 pnpm --filter storybook dev  # Check in Storybook
 ```
+
+If the component belongs on a landing (nav, marketing block, form, feedback empty/error), add or update a usage example in `apps/demo`.
 
 ---
 

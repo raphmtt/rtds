@@ -4,17 +4,29 @@ import {
   SiteShell,
   SiteHeader,
   SiteFooter,
+  AnnouncementBar,
   Hero,
   Section,
   Container,
+  Stack,
+  Grid,
   FeatureGrid,
   FeatureGridItem,
+  FeatureSplit,
+  LogoCloud,
   StatsRow,
   StatItem,
+  PricingTable,
+  PricingTier,
+  Testimonial,
+  TestimonialGrid,
   FAQ,
   CTASection,
+  ContactForm,
+  NewsletterForm,
   Button,
   ModeToggle,
+  ModeSelect,
   BrandSelect,
   Icon,
   ICON_SIZE_FEATURE,
@@ -24,9 +36,19 @@ import {
   AccordionItem,
   AccordionTrigger,
   AccordionContent,
+  Alert,
+  AlertDescription,
+  AlertTitle,
   Avatar,
   AvatarFallback,
   AvatarImage,
+  Badge,
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
   Checkbox,
   Dialog,
   DialogClose,
@@ -36,6 +58,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  EmptyState,
+  ErrorState,
+  FormField,
+  Input,
   Label,
   Select,
   SelectContent,
@@ -49,12 +75,14 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
+  Skeleton,
   Switch,
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
   TextLink,
+  Textarea,
   Tooltip,
   TooltipContent,
   TooltipProvider,
@@ -70,6 +98,8 @@ import {
   Sparkles,
   Github,
   Twitter,
+  Inbox,
+  Info,
 } from 'lucide-react';
 
 const Logo = () => (
@@ -78,11 +108,15 @@ const Logo = () => (
   </a>
 );
 
+const wordmark = (name: string) => (
+  <span className="font-heading text-xl font-semibold tracking-tight">{name}</span>
+);
+
 const navItems = [
-  { label: 'Button', href: '#button-poc' },
   { label: 'Primitives', href: '#primitives' },
   { label: 'Features', href: '#features' },
-  { label: 'Stats', href: '#stats' },
+  { label: 'Pricing', href: '#pricing' },
+  { label: 'Stories', href: '#stories' },
   { label: 'FAQ', href: '#faq' },
 ];
 
@@ -91,24 +125,24 @@ const footerColumns = [
     title: 'Product',
     links: [
       { label: 'Features', href: '#features' },
-      { label: 'Pricing', href: '#' },
-      { label: 'Changelog', href: '#' },
+      { label: 'Pricing', href: '#pricing' },
+      { label: 'Changelog', href: '#primitives' },
     ],
   },
   {
     title: 'Resources',
     links: [
-      { label: 'Documentation', href: '#' },
+      { label: 'Documentation', href: '#faq' },
       { label: 'Storybook', href: '/storybook' },
-      { label: 'GitHub', href: '#' },
+      { label: 'GitHub', href: '#contact' },
     ],
   },
   {
     title: 'Company',
     links: [
-      { label: 'About', href: '#' },
-      { label: 'Blog', href: '#' },
-      { label: 'Contact', href: '#' },
+      { label: 'About', href: '#stories' },
+      { label: 'Blog', href: '#features' },
+      { label: 'Contact', href: '#contact' },
     ],
   },
 ];
@@ -136,6 +170,27 @@ const faqItems = [
   },
 ];
 
+const pricingFeatures = {
+  starter: [
+    { text: 'Core primitives', included: true },
+    { text: 'Generated theme CSS', included: true },
+    { text: 'Email support', included: false },
+    { text: 'Custom niches', included: false },
+  ],
+  growth: [
+    { text: 'Core primitives', included: true },
+    { text: 'Generated theme CSS', included: true },
+    { text: 'Email support', included: true },
+    { text: 'Custom niches', included: false },
+  ],
+  scale: [
+    { text: 'Core primitives', included: true },
+    { text: 'Generated theme CSS', included: true },
+    { text: 'Email support', included: true },
+    { text: 'Custom niches', included: true },
+  ],
+};
+
 function Landing() {
   const { brand } = useBrand();
   const { resolvedMode } = useTheme();
@@ -143,10 +198,15 @@ function Landing() {
 
   return (
     <SiteShell>
+      <AnnouncementBar
+        message="Primitives now wrap Base UI. Storybook is the catalog."
+        action={{ label: 'See primitives', href: '#primitives' }}
+        storageKey="rtds-demo-announcement"
+      />
       <SiteHeader
         logo={<Logo />}
         navItems={navItems}
-        cta={{ label: 'Get Started', href: '#' }}
+        cta={{ label: 'Get Started', href: '#contact' }}
         themeControls={
           <>
             <span className="hidden md:inline max-w-[8.5rem] text-right text-[10px] leading-tight text-muted-foreground">
@@ -172,6 +232,17 @@ function Landing() {
               </Button>
             </>
           }
+        />
+
+        <LogoCloud
+          title="Built to compose the same blocks product apps ship"
+          logos={[
+            { name: 'Northwind', logo: wordmark('Northwind') },
+            { name: 'Helios', logo: wordmark('Helios') },
+            { name: 'Kinetic', logo: wordmark('Kinetic') },
+            { name: 'Harbor', logo: wordmark('Harbor') },
+            { name: 'Lumen', logo: wordmark('Lumen') },
+          ]}
         />
 
         <Section id="button-poc">
@@ -200,116 +271,176 @@ function Landing() {
 
         <Section id="primitives">
           <Container>
-            <h2 className="font-heading text-3xl font-bold text-center mb-3">Primitives</h2>
-            <p className="text-muted-foreground text-center max-w-2xl mx-auto mb-8">
-              Remaining interactive wrappers now sit on Base UI. Open dialogs and sheets, switch
-              tabs, and toggle controls — they restyle with the header playground theme.
-            </p>
-
-            <div className="grid gap-8 md:grid-cols-2">
-              <div className="space-y-4 rounded-lg border p-6">
-                <h3 className="font-heading text-lg font-semibold">Dialog & Sheet</h3>
-                <div className="flex flex-wrap gap-3">
-                  <Dialog>
-                    <DialogTrigger render={<Button variant="outline" />}>Open dialog</DialogTrigger>
-                    <DialogContent>
-                      <DialogHeader>
-                        <DialogTitle>Base UI dialog</DialogTitle>
-                        <DialogDescription>
-                          Focus stays inside the popup. Close with the button, overlay, or Escape.
-                        </DialogDescription>
-                      </DialogHeader>
-                      <DialogFooter>
-                        <DialogClose render={<Button type="button" variant="outline" />}>
-                          Close
-                        </DialogClose>
-                      </DialogFooter>
-                    </DialogContent>
-                  </Dialog>
-                  <Sheet>
-                    <SheetTrigger render={<Button variant="secondary" />}>Open sheet</SheetTrigger>
-                    <SheetContent>
-                      <SheetHeader>
-                        <SheetTitle>Navigation sheet</SheetTitle>
-                        <SheetDescription>
-                          Drawer from the right edge. Swipe or use the close control.
-                        </SheetDescription>
-                      </SheetHeader>
-                    </SheetContent>
-                  </Sheet>
-                </div>
+            <Stack gap={8}>
+              <div className="text-center">
+                <h2 className="font-heading text-3xl font-bold mb-3">Primitives</h2>
+                <p className="text-muted-foreground max-w-2xl mx-auto">
+                  Remaining interactive wrappers now sit on Base UI. Open dialogs and sheets,
+                  switch tabs, and toggle controls — they restyle with the header playground
+                  theme.
+                </p>
               </div>
 
-              <div className="space-y-4 rounded-lg border p-6">
-                <h3 className="font-heading text-lg font-semibold">Select & Tabs</h3>
-                <Select defaultValue="atlas">
-                  <SelectTrigger aria-label="Example select">
-                    <SelectValue placeholder="Choose a niche" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="atlas">Atlas</SelectItem>
-                    <SelectItem value="folio">Folio</SelectItem>
-                    <SelectItem value="maison">Maison</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Tabs defaultValue="one">
-                  <TabsList>
-                    <TabsTrigger value="one">One</TabsTrigger>
-                    <TabsTrigger value="two">Two</TabsTrigger>
-                    <TabsTrigger value="three">Three</TabsTrigger>
-                  </TabsList>
-                  <TabsContent value="one">First panel.</TabsContent>
-                  <TabsContent value="two">Second panel.</TabsContent>
-                  <TabsContent value="three">Third panel.</TabsContent>
-                </Tabs>
-              </div>
+              <Grid cols={2} gap={8}>
+                <div className="space-y-4 rounded-lg border p-6">
+                  <h3 className="font-heading text-lg font-semibold">Dialog & Sheet</h3>
+                  <div className="flex flex-wrap gap-3">
+                    <Dialog>
+                      <DialogTrigger render={<Button variant="outline" />}>
+                        Open dialog
+                      </DialogTrigger>
+                      <DialogContent>
+                        <DialogHeader>
+                          <DialogTitle>Base UI dialog</DialogTitle>
+                          <DialogDescription>
+                            Focus stays inside the popup. Close with the button, overlay, or
+                            Escape.
+                          </DialogDescription>
+                        </DialogHeader>
+                        <DialogFooter>
+                          <DialogClose render={<Button type="button" variant="outline" />}>
+                            Close
+                          </DialogClose>
+                        </DialogFooter>
+                      </DialogContent>
+                    </Dialog>
+                    <Sheet>
+                      <SheetTrigger render={<Button variant="secondary" />}>
+                        Open sheet
+                      </SheetTrigger>
+                      <SheetContent>
+                        <SheetHeader>
+                          <SheetTitle>Navigation sheet</SheetTitle>
+                          <SheetDescription>
+                            Drawer from the right edge. Swipe or use the close control.
+                          </SheetDescription>
+                        </SheetHeader>
+                      </SheetContent>
+                    </Sheet>
+                  </div>
+                </div>
 
-              <div className="space-y-4 rounded-lg border p-6">
-                <h3 className="font-heading text-lg font-semibold">Checkbox, Switch, Tooltip</h3>
-                <div className="flex items-center gap-2">
-                  <Checkbox id="demo-check" defaultChecked />
-                  <Label htmlFor="demo-check">Accept tokens</Label>
+                <div className="space-y-4 rounded-lg border p-6">
+                  <h3 className="font-heading text-lg font-semibold">Select & Tabs</h3>
+                  <Select defaultValue="atlas">
+                    <SelectTrigger aria-label="Example select">
+                      <SelectValue placeholder="Choose a niche" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="atlas">Atlas</SelectItem>
+                      <SelectItem value="folio">Folio</SelectItem>
+                      <SelectItem value="maison">Maison</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Tabs defaultValue="one">
+                    <TabsList>
+                      <TabsTrigger value="one">One</TabsTrigger>
+                      <TabsTrigger value="two">Two</TabsTrigger>
+                      <TabsTrigger value="three">Three</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="one">First panel.</TabsContent>
+                    <TabsContent value="two">Second panel.</TabsContent>
+                    <TabsContent value="three">Third panel.</TabsContent>
+                  </Tabs>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Switch id="demo-switch" defaultChecked />
-                  <Label htmlFor="demo-switch">Dark-ready</Label>
-                </div>
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger render={<Button variant="ghost" size="sm" />}>
-                      Hover me
-                    </TooltipTrigger>
-                    <TooltipContent>Token-styled tooltip</TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              </div>
 
-              <div className="space-y-4 rounded-lg border p-6">
-                <h3 className="font-heading text-lg font-semibold">Accordion, Avatar, Link</h3>
-                <div className="flex items-center gap-3">
-                  <Avatar>
-                    <AvatarImage alt="Ada" src="https://i.pravatar.cc/80?img=5" />
-                    <AvatarFallback>AL</AvatarFallback>
-                  </Avatar>
-                  <TextLink href="#faq">Read the FAQ</TextLink>
+                <div className="space-y-4 rounded-lg border p-6">
+                  <h3 className="font-heading text-lg font-semibold">Checkbox, Switch, Tooltip</h3>
+                  <div className="flex items-center gap-2">
+                    <Checkbox id="demo-check" defaultChecked />
+                    <Label htmlFor="demo-check">Accept tokens</Label>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Switch id="demo-switch" defaultChecked />
+                    <Label htmlFor="demo-switch">Dark-ready</Label>
+                  </div>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger render={<Button variant="ghost" size="sm" />}>
+                        Hover me
+                      </TooltipTrigger>
+                      <TooltipContent>Token-styled tooltip</TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                 </div>
-                <Separator />
-                <Accordion className="w-full">
-                  <AccordionItem value="a">
-                    <AccordionTrigger>What changed?</AccordionTrigger>
-                    <AccordionContent>
-                      Interactive primitives wrap Base UI. Visuals still use semantic tokens.
-                    </AccordionContent>
-                  </AccordionItem>
-                  <AccordionItem value="b">
-                    <AccordionTrigger>Is Radix gone?</AccordionTrigger>
-                    <AccordionContent>
-                      Yes from `@rtds/ui` sources. Button was the reference; this inventory matches it.
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-              </div>
-            </div>
+
+                <div className="space-y-4 rounded-lg border p-6">
+                  <h3 className="font-heading text-lg font-semibold">Accordion, Avatar, Link</h3>
+                  <div className="flex items-center gap-3">
+                    <Avatar>
+                      <AvatarImage alt="Ada" src="https://i.pravatar.cc/80?img=5" />
+                      <AvatarFallback>AL</AvatarFallback>
+                    </Avatar>
+                    <TextLink href="#faq">Read the FAQ</TextLink>
+                  </div>
+                  <Separator />
+                  <Accordion className="w-full">
+                    <AccordionItem value="a">
+                      <AccordionTrigger>What changed?</AccordionTrigger>
+                      <AccordionContent>
+                        Interactive primitives wrap Base UI. Visuals still use semantic tokens.
+                      </AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="b">
+                      <AccordionTrigger>Is Radix gone?</AccordionTrigger>
+                      <AccordionContent>
+                        Yes from `@rtds/ui` sources. Button was the reference; this inventory
+                        matches it.
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                </div>
+
+                <div className="space-y-4 rounded-lg border p-6">
+                  <h3 className="font-heading text-lg font-semibold">Badge, Alert, Skeleton</h3>
+                  <div className="flex flex-wrap gap-2">
+                    <Badge>Default</Badge>
+                    <Badge variant="secondary">Secondary</Badge>
+                    <Badge variant="outline">Outline</Badge>
+                  </div>
+                  <Alert>
+                    <Icon icon={Info} />
+                    <AlertTitle>Theme tokens</AlertTitle>
+                    <AlertDescription>
+                      This alert follows {niche} × {resolvedMode} from the header.
+                    </AlertDescription>
+                  </Alert>
+                  <div className="flex items-center gap-3">
+                    <Skeleton className="h-10 w-10 rounded-full" />
+                    <div className="flex flex-1 flex-col gap-2">
+                      <Skeleton className="h-3 w-2/3" />
+                      <Skeleton className="h-3 w-1/3" />
+                    </div>
+                  </div>
+                </div>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Form field</CardTitle>
+                    <CardDescription>
+                      Input, textarea, and ModeSelect on the same card.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Stack gap={4}>
+                      <FormField label="Email" htmlFor="demo-email" hint="We never share this.">
+                        <Input id="demo-email" type="email" placeholder="you@example.com" />
+                      </FormField>
+                      <FormField label="Notes" htmlFor="demo-notes">
+                        <Textarea id="demo-notes" rows={3} placeholder="Optional context" />
+                      </FormField>
+                      <div className="space-y-2">
+                        <p className="text-sm font-medium">Color mode</p>
+                        <ModeSelect />
+                      </div>
+                    </Stack>
+                  </CardContent>
+                  <CardFooter>
+                    <Button>Save draft</Button>
+                  </CardFooter>
+                </Card>
+              </Grid>
+            </Stack>
           </Container>
         </Section>
 
@@ -352,6 +483,23 @@ function Landing() {
           </FeatureGrid>
         </Section>
 
+        <FeatureSplit
+          eyebrow="Tokens first"
+          title="One theme file, every surface"
+          description="Product apps import generated CSS plus @rtds/ui/base.css. Switch the playground in the header to see the same split restyle in place."
+          media={
+            <div className="flex aspect-video items-center justify-center rounded-lg bg-muted text-muted-foreground">
+              Theme preview
+            </div>
+          }
+          actions={
+            <>
+              <Button>Read theming docs</Button>
+              <Button variant="outline">Open Storybook</Button>
+            </>
+          }
+        />
+
         <Section id="stats">
           <Container>
             <h2 className="font-heading text-3xl font-bold text-center mb-8">
@@ -366,13 +514,100 @@ function Landing() {
           </StatsRow>
         </Section>
 
-        <Section id="faq" tone="muted">
+        <PricingTable
+          id="pricing"
+          className="bg-muted"
+          title="Simple pricing"
+          description="Start with tokens and grow into a full landing kit."
+        >
+          <PricingTier
+            name="Starter"
+            description="For a first product surface."
+            price="$0"
+            features={pricingFeatures.starter}
+            cta={{ label: 'Get started', href: '#contact' }}
+          />
+          <PricingTier
+            name="Growth"
+            description="For teams shipping marketing sites."
+            price="$49"
+            featured
+            features={pricingFeatures.growth}
+            cta={{ label: 'Start trial', href: '#contact' }}
+          />
+          <PricingTier
+            name="Scale"
+            description="For multi-brand playgrounds."
+            price="$99"
+            features={pricingFeatures.scale}
+            cta={{ label: 'Talk to us', href: '#contact' }}
+          />
+        </PricingTable>
+
+        <TestimonialGrid
+          id="stories"
+          title="Teams shipping with RTDS"
+          description="The same blocks you just scrolled — header, pricing, and forms — restyle from tokens."
+        >
+          <Testimonial
+            quote="We swapped the theme file and the landing restyled without touching components."
+            author={{ name: 'Ada Lovelace', title: 'Staff engineer', company: 'Northwind' }}
+          />
+          <Testimonial
+            quote="Storybook and the demo finally show the same primitives. Reviews got shorter."
+            author={{ name: 'Grace Hopper', title: 'Design lead', company: 'Helios' }}
+          />
+          <Testimonial
+            quote="Base UI wrappers kept a11y behavior while our CVA styles stayed intact."
+            author={{ name: 'Alan Kay', title: 'Frontend', company: 'Kinetic' }}
+          />
+        </TestimonialGrid>
+
+        <Section tone="muted">
+          <Container>
+            <Grid cols={2} gap={8}>
+              <div className="rounded-lg border bg-background">
+                <EmptyState
+                  icon={<Icon icon={Inbox} />}
+                  title="No changelog yet"
+                  description="New releases will land here. Storybook already lists every public export."
+                  actions={<Button variant="outline">Open Storybook</Button>}
+                />
+              </div>
+              <div className="rounded-lg border bg-background">
+                <ErrorState
+                  title="Could not load a preview"
+                  description="Feedback states use the same tokens as the rest of the landing."
+                  onRetry={() => undefined}
+                />
+              </div>
+            </Grid>
+          </Container>
+        </Section>
+
+        <Section id="faq">
           <FAQ
             title="Frequently asked questions"
             description="Find answers to common questions about the design system."
             items={faqItems}
           />
         </Section>
+
+        <Section tone="muted">
+          <Container>
+            <Stack gap={8} align="center">
+              <div className="text-center max-w-xl">
+                <h2 className="font-heading text-3xl font-bold">Stay in the loop</h2>
+                <p className="mt-2 text-muted-foreground">
+                  Newsletter is a compact form. The contact card below is the full block.
+                </p>
+              </div>
+              <NewsletterForm className="w-full max-w-md" onSubmit={() => undefined} />
+            </Stack>
+          </Container>
+        </Section>
+
+        <ContactForm id="contact" onSubmit={() => undefined} />
 
         <CTASection
           title="Ready to build?"
@@ -396,19 +631,19 @@ function Landing() {
         socialLinks={[
           {
             label: 'GitHub',
-            href: '#',
+            href: '#github',
             icon: <Icon icon={Github} />,
           },
           {
             label: 'Twitter',
-            href: '#',
+            href: '#twitter',
             icon: <Icon icon={Twitter} />,
           },
         ]}
         copyright="© 2026 RTDS. All rights reserved."
         legalLinks={[
-          { label: 'Privacy', href: '#' },
-          { label: 'Terms', href: '#' },
+          { label: 'Privacy', href: '#privacy' },
+          { label: 'Terms', href: '#terms' },
         ]}
       />
     </SiteShell>
