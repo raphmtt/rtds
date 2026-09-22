@@ -45,7 +45,12 @@ export function ModeSelect() {
   const { mode, setMode } = useTheme();
 
   return (
-    <Select value={mode} onValueChange={(value) => setMode(value as 'light' | 'dark' | 'system')}>
+    <Select
+      value={mode}
+      onValueChange={(value) => {
+        if (value) setMode(value as 'light' | 'dark' | 'system');
+      }}
+    >
       <SelectTrigger className="w-[140px]">
         <SelectValue placeholder="Select mode" />
       </SelectTrigger>

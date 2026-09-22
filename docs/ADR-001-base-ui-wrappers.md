@@ -11,7 +11,7 @@ This decision is **final**. Do not reopen Base UI vs shadcn vs a new kit.
 
 ## Context
 
-`@rtds/ui` today mixes Radix primitives, Radix `Slot`, and CVA-styled components. That path looks like a shadcn clone: headless parts leak as public compound APIs (`DialogTrigger`, `AccordionContent`, …), and consumers assemble kits instead of using a designed surface.
+`@rtds/ui` previously mixed Radix primitives, Radix `Slot`, and CVA-styled components. That path looks like a shadcn clone: headless parts leak as public compound APIs (`DialogTrigger`, `AccordionContent`, …), and consumers assemble kits instead of using a designed surface.
 
 We need a locked architecture that:
 
@@ -51,13 +51,29 @@ Theming remains one generated theme CSS file + `.dark` on `<html>`. Switching mo
 
 ---
 
-## PoC scope (this change)
+## PoC scope / Rollout
 
-**Button only.**
+**PoC (complete):** Button — import from `@base-ui/react/button`. Public exports stay `Button` and `buttonVariants` (the CVA helper for token classes — not a Base UI leak).
 
-- Import `Button` from `@base-ui/react/button`.
-- Public exports stay `Button` and `buttonVariants` (the CVA helper for token classes — not a Base UI leak).
-- Remaining inventory (Accordion, Dialog, Select, …) stays on Radix until a later rollout. Each future component follows this same 1:1 rule.
+**Inventory rollout (RT-12 — complete):** remaining Radix primitives in `@rtds/ui` now wrap Base UI the same way. `rg "@radix-ui" packages/ui/src` is empty; unused `@radix-ui/*` packages were removed from `packages/ui/package.json`.
+
+| Public surface | Headless module |
+| --- | --- |
+| `Button` | `@base-ui/react/button` |
+| `Accordion*` | `@base-ui/react/accordion` |
+| `Avatar*` | `@base-ui/react/avatar` |
+| `Checkbox` | `@base-ui/react/checkbox` |
+| `Dialog*` | `@base-ui/react/dialog` |
+| `Label` | native `<label>` (Base UI has no standalone Label) |
+| `Select*` | `@base-ui/react/select` |
+| `Separator` | `@base-ui/react/separator` |
+| `Sheet*` | `@base-ui/react/drawer` (sheet pattern) |
+| `Switch` | `@base-ui/react/switch` |
+| `Tabs*` | `@base-ui/react/tabs` |
+| `Tooltip*` | `@base-ui/react/tooltip` |
+| `TextLink` | styled `<a>` (Slot / `asChild` removed) |
+
+Compound export names used by demo/Storybook (`DialogTrigger`, `SelectItem`, …) remain **temporary thin wrappers** owned inside `@rtds/ui`. They do not re-export `@base-ui/react/*` to app code. Prefer fewer leaked parts in later work; do not re-export `*.Root` namespaces.
 
 ---
 
@@ -87,6 +103,17 @@ Adopted from Base UI (replaces Radix Slot):
 
 Internal DS call sites that used `asChild` for CTAs (`SiteHeader`, `PricingTier`) now apply `buttonVariants()` to the anchor.
 
+### Inventory migration (RT-12)
+
+| Before | After |
+| --- | --- |
+| `Accordion type="single" collapsible` | **Removed.** Default is one open panel (`multiple` defaults `false`). Pass `multiple` to open several. |
+| Trigger `asChild` (Sheet, Dialog, Tooltip, …) | **Removed.** Use Base UI `render`. |
+| `TextLink asChild` | **Removed.** `TextLink` is always an `<a>`. |
+| Radix `data-[state=…]` selectors | Base UI `data-open` / `data-closed` / `data-checked` / `data-active` / `data-panel-open` |
+| Select `onValueChange` always a string | May receive `null` when cleared; call sites must guard. |
+| Sheet headless layer (`@radix-ui/react-dialog`) | `@base-ui/react/drawer`. Pass `side` on `Sheet` so swipe direction matches the panel. |
+
 ---
 
 ## Consequences
@@ -100,7 +127,7 @@ Internal DS call sites that used `asChild` for CTAs (`SiteHeader`, `PricingTier`
 **Negative / follow-up**
 
 - `asChild` consumers must migrate (small, documented).
-- Other components still use Radix until wrapped the same way.
+- Compound public names (`DialogTrigger`, …) are still leaked as owned wrappers; collapsing them to 1:1 surfaces is follow-up, not this rollout.
 - Link-looking controls are `<a className={buttonVariants()}>`, not `<Button>`.
 
 **Constraints**
@@ -113,18 +140,15 @@ Internal DS call sites that used `asChild` for CTAs (`SiteHeader`, `PricingTier`
 
 ## Non-goals
 
-- Migrating Accordion, Dialog, Sheet, Select, Tabs, Tooltip, or other Radix components in this change
 - Cloning shadcn’s file structure, CLI, or compound public API
 - Redesigning color, type, radius, or inventing hex
 - Penpot / Figma sync work
 - Debating Base UI vs shadcn vs another kit
-- Publishing to the npm registry
+- Publishing to the npm registry (RT-9 / DEV-9)
+- Collapsing remaining compound exports (`DialogTrigger`, …) into a single component per primitive (allowed later; not required for RT-12)
 
 ---
 
-## Rollout (later)
+## Rollout
 
-1. For each remaining primitive: wrap the Base UI component (or compound tree) behind **one** `@rtds/ui` export.
-2. Swallow parts; expose behavior through props / slots we own.
-3. Keep CVA + semantic tokens for visuals.
-4. Update Storybook + demo per component. Do not couple wrappers to a product app.
+Completed for the listed `@rtds/ui` primitives (RT-12). Further work may reduce leaked compound parts; it must not reintroduce Radix or re-export Base UI namespaces.

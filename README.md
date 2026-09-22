@@ -100,15 +100,14 @@ See [docs/THEMING.md](./docs/THEMING.md). The demo (`apps/demo/themes`) is the r
 - [DESIGN.md](./docs/DESIGN.md) — Visual principles and token rules
 - [PERF-A11Y-CHECKLIST.md](./docs/PERF-A11Y-CHECKLIST.md) — Pre-ship checklist
 - [FIGMA-CODE-SYNC.md](./docs/FIGMA-CODE-SYNC.md) — Figma ↔ code sync guide
-- [ADR-001-base-ui-wrappers.md](./docs/ADR-001-base-ui-wrappers.md) — FINAL: 1:1 Base UI wrappers (Button PoC)
-- [AGENTS.md](./docs/AGENTS.md) — Instructions for AI agents
+- [ADR-001-base-ui-wrappers.md](./docs/ADR-001-base-ui-wrappers.md) — FINAL: 1:1 Base UI wrappers
+- [AGENTS.md](./AGENTS.md) — Instructions for AI agents (portable SoT; `docs/AGENTS.md` is a pointer)
 
 ## Tech Stack
 
 - React 19 + TypeScript strict
 - Tailwind CSS v4
-- Base UI (`@base-ui/react`) — 1:1 wrappers; Button is the PoC ([ADR-001](./docs/ADR-001-base-ui-wrappers.md))
-- Remaining inventory still on Radix until rolled out the same way
+- Base UI (`@base-ui/react`) — 1:1 wrappers for `@rtds/ui` primitives ([ADR-001](./docs/ADR-001-base-ui-wrappers.md))
 - Storybook 8+
 - Vite
 - pnpm workspaces + Turborepo

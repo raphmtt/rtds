@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { SiteHeader, ModeToggle, BrandSelect } from '@rtds/ui';
+import { BrandProvider, BrandSelect, ModeToggle, SiteHeader, ThemeProvider } from '@rtds/ui';
 
 const Logo = () => (
   <div className="font-heading font-bold text-xl">RTDS</div>
@@ -31,6 +31,15 @@ export const Default: Story = {
 };
 
 export const WithThemeControls: Story = {
+  decorators: [
+    (Story) => (
+      <BrandProvider defaultBrand="atlas">
+        <ThemeProvider defaultMode="light">
+          <Story />
+        </ThemeProvider>
+      </BrandProvider>
+    ),
+  ],
   args: {
     logo: <Logo />,
     navItems: [
