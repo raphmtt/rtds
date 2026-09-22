@@ -101,7 +101,7 @@ See [docs/THEMING.md](./docs/THEMING.md). The demo (`apps/demo/themes`) is the r
 - [PERF-A11Y-CHECKLIST.md](./docs/PERF-A11Y-CHECKLIST.md) — Pre-ship checklist
 - [FIGMA-CODE-SYNC.md](./docs/FIGMA-CODE-SYNC.md) — Figma ↔ code sync guide
 - [ADR-001-base-ui-wrappers.md](./docs/ADR-001-base-ui-wrappers.md) — FINAL: 1:1 Base UI wrappers
-- [AGENTS.md](./docs/AGENTS.md) — Instructions for AI agents
+- [AGENTS.md](./AGENTS.md) — Instructions for AI agents (portable SoT; `docs/AGENTS.md` is a pointer)
 
 ## Tech Stack
 
