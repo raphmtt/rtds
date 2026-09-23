@@ -88,7 +88,10 @@ const Button = React.forwardRef<HTMLElement, ButtonProps>(
       >
         <span className="rtds-button-content">{children}</span>
         <span className="rtds-button-spinner" aria-hidden="true">
-          <Icon icon={Loader2} className="animate-spin motion-reduce:animate-none" />
+          <Icon
+            icon={Loader2}
+            className={loading ? 'animate-spin motion-reduce:animate-none' : undefined}
+          />
           {loadingText ? <span className="text-current">{loadingText}</span> : null}
         </span>
       </BaseButton>

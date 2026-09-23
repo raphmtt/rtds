@@ -185,7 +185,6 @@
   justify-content: center;
   gap: 0.5rem;
   opacity: 0;
-  filter: blur(2px);
   pointer-events: none;
   transition:
     opacity var(--duration-state) ease,
@@ -194,7 +193,6 @@
 
 .rtds-button[data-loading] .rtds-button-spinner {
   opacity: 1;
-  filter: blur(0);
 }
 
 /* Reduced motion: drop movement, keep color/opacity. Keyframes (spinners) still collapse. */
