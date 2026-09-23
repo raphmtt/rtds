@@ -1,8 +1,12 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "noEmit": true
+    "noEmit": true,
+    "paths": {
+      "@rtds-config": ["../../rtds.config.ts"],
+      "lenis": ["./node_modules/lenis"]
+    }
   },
-  "include": [".storybook/**/*", "stories/**/*"],
+  "include": [".storybook/**/*", "stories/**/*", "../../tooling/playground/lenis-css.d.ts"],
   "exclude": ["node_modules", "storybook-static"]
 }

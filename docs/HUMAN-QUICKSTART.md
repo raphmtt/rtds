@@ -39,6 +39,8 @@ pnpm --filter demo dev
 
 > Vite uses the `development` export condition to resolve `@rtds/*` packages from source. This enables HMR across package boundaries.
 
+- Feel-test smooth scroll in the demo or Storybook: set `scroll.smooth: true` in root `rtds.config.ts` and restart the dev server. Default is native scroll (`false`). `prefers-reduced-motion: reduce` keeps Lenis off.
+
 ---
 
 ## Option 2: Add to Existing Project
