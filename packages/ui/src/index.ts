@@ -11,8 +11,8 @@ export { BrandProvider, useBrand } from './providers/brand-provider';
 export { Button, buttonVariants } from './components/button';
 export type { ButtonProps } from './components/button';
 
-export { Input } from './components/input';
-export type { InputProps } from './components/input';
+export { Input, fieldVariants } from './components/input';
+export type { InputProps, FieldVariantProps } from './components/input';
 
 export { Textarea } from './components/textarea';
 export type { TextareaProps } from './components/textarea';

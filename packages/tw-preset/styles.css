@@ -195,6 +195,53 @@
   opacity: 1;
 }
 
+/* Field motion — named properties only. Focus is color/ring; shake is transform (wrapper). */
+.rtds-field-control {
+  transition:
+    border-color var(--duration-state) ease,
+    box-shadow var(--duration-state) ease;
+}
+
+.rtds-field-action {
+  transition:
+    color var(--duration-state) ease,
+    background-color var(--duration-state) ease,
+    opacity var(--duration-state) ease,
+    transform var(--duration-press) var(--ease-out);
+}
+
+.rtds-field-action:active:not(:disabled) {
+  transform: scale(var(--scale-press));
+}
+
+@keyframes rtds-field-shake {
+  0% {
+    transform: translateX(0);
+  }
+  16% {
+    transform: translateX(-3px);
+  }
+  32% {
+    transform: translateX(3px);
+  }
+  48% {
+    transform: translateX(-2px);
+  }
+  64% {
+    transform: translateX(2px);
+  }
+  80% {
+    transform: translateX(-1px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.rtds-field[data-shake] {
+  animation: rtds-field-shake 320ms linear;
+}
+
 /* Reduced motion: drop movement, keep color/opacity. Keyframes (spinners) still collapse. */
 @media (prefers-reduced-motion: reduce) {
   :root {
@@ -214,6 +261,14 @@
   .rtds-button[data-loading] .rtds-button-content,
   .rtds-button[data-loading] .rtds-button-spinner {
     filter: none;
+  }
+
+  .rtds-field[data-shake] {
+    animation: none;
+  }
+
+  .rtds-field-action:active:not(:disabled) {
+    transform: none;
   }
 
   *,
