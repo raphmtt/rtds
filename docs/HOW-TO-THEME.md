@@ -74,6 +74,21 @@ Load Google Fonts in the app shell (`apps/demo/index.html`, Storybook `preview-h
 
 To swap a family: change the primitive value, update the `<link>`, run `pnpm tokens:build`.
 
+### UI type scale
+
+Same scale for every niche. Generator emits primitives (`--text-xs`, `--font-weight-medium`, `--leading-tight`, …) and composite roles (`--text-label`, `--text-body-sm`, …). Tailwind utilities:
+
+| Class | Role |
+|-------|------|
+| `text-label-sm` | 12px / medium / tight |
+| `text-label` | 14px / medium / tight |
+| `text-label-lg` | 16px / medium / tight |
+| `text-body-sm` | 14px / regular / normal |
+| `text-body` | 16px / regular / normal |
+| `text-body-lg` | 18px / regular / normal |
+
+Do not replace existing `text-sm font-medium` on components until that component’s PR. Headings/display are not in this set.
+
 ---
 
 ## Icons

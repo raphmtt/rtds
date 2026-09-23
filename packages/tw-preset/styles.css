@@ -38,6 +38,53 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  /* Additive. Do not remap text-xs/sm/base/lg, font-medium, or leading-* —
+     existing UI (including Button `text-sm font-medium`) keeps Tailwind defaults. */
+  --font-weight-regular: var(--font-weight-regular);
+}
+
+/* Semantic UI type roles (size + weight + leading + body family). */
+@utility text-label-sm {
+  font-family: var(--text-label-sm--font-family), ui-sans-serif, system-ui, sans-serif;
+  font-size: var(--text-label-sm);
+  font-weight: var(--text-label-sm--font-weight);
+  line-height: var(--text-label-sm--line-height);
+}
+
+@utility text-label {
+  font-family: var(--text-label--font-family), ui-sans-serif, system-ui, sans-serif;
+  font-size: var(--text-label);
+  font-weight: var(--text-label--font-weight);
+  line-height: var(--text-label--line-height);
+}
+
+@utility text-label-lg {
+  font-family: var(--text-label-lg--font-family), ui-sans-serif, system-ui, sans-serif;
+  font-size: var(--text-label-lg);
+  font-weight: var(--text-label-lg--font-weight);
+  line-height: var(--text-label-lg--line-height);
+}
+
+@utility text-body-sm {
+  font-family: var(--text-body-sm--font-family), ui-sans-serif, system-ui, sans-serif;
+  font-size: var(--text-body-sm);
+  font-weight: var(--text-body-sm--font-weight);
+  line-height: var(--text-body-sm--line-height);
+}
+
+@utility text-body {
+  font-family: var(--text-body--font-family), ui-sans-serif, system-ui, sans-serif;
+  font-size: var(--text-body);
+  font-weight: var(--text-body--font-weight);
+  line-height: var(--text-body--line-height);
+}
+
+@utility text-body-lg {
+  font-family: var(--text-body-lg--font-family), ui-sans-serif, system-ui, sans-serif;
+  font-size: var(--text-body-lg);
+  font-weight: var(--text-body-lg--font-weight);
+  line-height: var(--text-body-lg--line-height);
 }
 
 /* Base styles */

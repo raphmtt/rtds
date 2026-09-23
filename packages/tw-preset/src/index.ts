@@ -8,6 +8,53 @@ export const rtdsPreset = {
         body: ['var(--font-body)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
       },
+      fontSize: {
+        'label-sm': [
+          'var(--text-label-sm)',
+          {
+            lineHeight: 'var(--text-label-sm--line-height)',
+            fontWeight: 'var(--text-label-sm--font-weight)',
+          },
+        ],
+        label: [
+          'var(--text-label)',
+          {
+            lineHeight: 'var(--text-label--line-height)',
+            fontWeight: 'var(--text-label--font-weight)',
+          },
+        ],
+        'label-lg': [
+          'var(--text-label-lg)',
+          {
+            lineHeight: 'var(--text-label-lg--line-height)',
+            fontWeight: 'var(--text-label-lg--font-weight)',
+          },
+        ],
+        'body-sm': [
+          'var(--text-body-sm)',
+          {
+            lineHeight: 'var(--text-body-sm--line-height)',
+            fontWeight: 'var(--text-body-sm--font-weight)',
+          },
+        ],
+        body: [
+          'var(--text-body)',
+          {
+            lineHeight: 'var(--text-body--line-height)',
+            fontWeight: 'var(--text-body--font-weight)',
+          },
+        ],
+        'body-lg': [
+          'var(--text-body-lg)',
+          {
+            lineHeight: 'var(--text-body-lg--line-height)',
+            fontWeight: 'var(--text-body-lg--font-weight)',
+          },
+        ],
+      },
+      fontWeight: {
+        regular: 'var(--font-weight-regular)',
+      },
       colors: {
         background: 'var(--background)',
         foreground: 'var(--foreground)',

@@ -98,11 +98,16 @@ CSS looks like:
   --background: oklch(0.9851 0 0);
   --primary: oklch(0.2103 0.0059 285.89);
   --radius: 0.5rem;
+  --font-body: "Inter";
+  --text-sm: 0.875rem;
+  --text-label: var(--text-sm);
 }
 .dark {
   --background: oklch(0.1408 0.0044 285.82);
 }
 ```
+
+Type size/weight/leading and the `label*` / `body*` roles are **shared** (same CSS vars on every theme). Color and `--radius` stay per theme JSON.
 
 Commit `packages/tokens/dist`. CI runs `pnpm tokens:build` and fails on drift.
 
