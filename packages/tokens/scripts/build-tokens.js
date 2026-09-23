@@ -130,6 +130,67 @@ function flattenTokens(obj, prefix = '') {
   return result;
 }
 
+/** Locked UI type scale — shared by atlas/folio/maison. Headings/display stay out of this set. */
+const TYPE_SCALE_PRIMITIVES = {
+  'text-xs': '0.75rem',
+  'text-sm': '0.875rem',
+  'text-base': '1rem',
+  'text-lg': '1.125rem',
+  'font-weight-regular': '400',
+  'font-weight-medium': '500',
+  'font-weight-semibold': '600',
+  'leading-tight': '1.25',
+  'leading-normal': '1.5',
+};
+
+/**
+ * Semantic UI roles. Size/weight/leading reference the primitives above.
+ * Font family is always --font-body (fallbacks are applied in Tailwind utilities).
+ */
+const TYPE_ROLES = {
+  'label-sm': {
+    size: 'var(--text-xs)',
+    weight: 'var(--font-weight-medium)',
+    leading: 'var(--leading-tight)',
+  },
+  label: {
+    size: 'var(--text-sm)',
+    weight: 'var(--font-weight-medium)',
+    leading: 'var(--leading-tight)',
+  },
+  'label-lg': {
+    size: 'var(--text-base)',
+    weight: 'var(--font-weight-medium)',
+    leading: 'var(--leading-tight)',
+  },
+  'body-sm': {
+    size: 'var(--text-sm)',
+    weight: 'var(--font-weight-regular)',
+    leading: 'var(--leading-normal)',
+  },
+  body: {
+    size: 'var(--text-base)',
+    weight: 'var(--font-weight-regular)',
+    leading: 'var(--leading-normal)',
+  },
+  'body-lg': {
+    size: 'var(--text-lg)',
+    weight: 'var(--font-weight-regular)',
+    leading: 'var(--leading-normal)',
+  },
+};
+
+function typeRoleVars() {
+  const vars = {};
+  for (const [role, spec] of Object.entries(TYPE_ROLES)) {
+    vars[`text-${role}`] = spec.size;
+    vars[`text-${role}--line-height`] = spec.leading;
+    vars[`text-${role}--font-weight`] = spec.weight;
+    vars[`text-${role}--font-family`] = 'var(--font-body)';
+  }
+  return vars;
+}
+
 function loadSharedVars() {
   const fallback = {
     'font-display': '"Instrument Serif"',
@@ -137,6 +198,8 @@ function loadSharedVars() {
     'font-body': '"Inter"',
     'font-mono': '"JetBrains Mono"',
     'space-section-y': '4rem',
+    ...TYPE_SCALE_PRIMITIVES,
+    ...typeRoleVars(),
   };
 
   if (!fs.existsSync(primitivesPath)) return fallback;
@@ -148,6 +211,9 @@ function loadSharedVars() {
     'font-body': `"${primitives['font-family-inter'] ?? 'Inter'}"`,
     'font-mono': `"${primitives['font-family-jetbrains'] ?? 'JetBrains Mono'}"`,
     'space-section-y': primitives['space-16'] ?? '4rem',
+    // Type scale is locked (not primitive.json lineHeight.tight, which is 1.1 for display).
+    ...TYPE_SCALE_PRIMITIVES,
+    ...typeRoleVars(),
   };
 }
 

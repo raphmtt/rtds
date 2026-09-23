@@ -82,6 +82,7 @@ Fix all errors before committing. Spot-check touched stories (`pnpm --filter sto
 ### Tokens
 
 - ✓ Use semantic tokens (`bg-background`, `text-foreground`, `border-border`)
+- ✓ UI type roles: `text-label` / `text-label-sm` / `text-label-lg` / `text-body` / `text-body-sm` / `text-body-lg`
 - ✗ Never use raw color values (`bg-zinc-100`, `text-gray-500`)
 - ✗ Never use arbitrary values (`w-[437px]`, `text-[13px]`)
 - ✓ Use `<Icon icon={Name} />` for Lucide (size 20 UI / 24 features, stroke 1.5)

@@ -21,6 +21,7 @@ function Introduction() {
           <li>✓ Responsive design (375, 768, 1440)</li>
           <li>✓ WCAG 2.2 AA accessibility</li>
           <li>✓ CSS variable tokens</li>
+          <li>✓ Shared UI type scale (`text-label`, `text-body`, and sm/lg roles)</li>
           <li>✓ Lucide icons + Instrument Serif / Inter / JetBrains Mono</li>
         </ul>
       </section>

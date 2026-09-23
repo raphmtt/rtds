@@ -49,7 +49,24 @@ Default product theme is **atlas**. Tailwind maps colors with `var(--…)` (no `
 
 ## Typography
 
-### Type Scale (rem, 16px root)
+### UI type scale (tokens)
+
+Shared across atlas / folio / maison. Emitted as CSS variables from `@rtds/tokens`; Tailwind utilities live in `@rtds/tw-preset`. All roles use `--font-body`.
+
+| Role | Utility | Size | Weight | Leading | Typical use |
+|------|---------|------|--------|---------|-------------|
+| `label-sm` | `text-label-sm` | `0.75rem` (`--text-xs`) | 500 | 1.25 | Button `sm`, badge, chips |
+| `label` | `text-label` | `0.875rem` (`--text-sm`) | 500 | 1.25 | Button default, compact form labels |
+| `label-lg` | `text-label-lg` | `1rem` (`--text-base`) | 500 | 1.25 | Button `lg`, CTAs |
+| `body-sm` | `text-body-sm` | `0.875rem` (`--text-sm`) | 400 | 1.5 | Helper text, captions |
+| `body` | `text-body` | `1rem` (`--text-base`) | 400 | 1.5 | Running text |
+| `body-lg` | `text-body-lg` | `1.125rem` (`--text-lg`) | 400 | 1.5 | Lead / light emphasis |
+
+Primitives: `--text-xs|sm|base|lg`, `--font-weight-regular|medium|semibold`, `--leading-tight|normal`.
+
+Default Tailwind `text-sm` / `font-medium` are unchanged — only opt into the roles above. Headings and display are **not** in this scale.
+
+### Marketing headings (class-based, not yet tokenized)
 
 | Token | Size | Line-height | Use |
 |-------|------|-------------|-----|
@@ -58,10 +75,6 @@ Default product theme is **atlas**. Tailwind maps colors with `var(--…)` (no `
 | `h2` | 1.875rem | 1.25 | Subsections |
 | `h3` | 1.5rem | 1.3 | Card titles |
 | `h4` | 1.25rem | 1.35 | Small headings |
-| `body-lg` | 1.125rem | 1.6 | Hero subcopy |
-| `body` | 1rem | 1.6 | Default |
-| `body-sm` | 0.875rem | 1.5 | Meta, captions |
-| `label` | 0.875rem | 1.4 | Form labels |
 
 ### Font Families (all niches)
 
