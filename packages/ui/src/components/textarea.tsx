@@ -1,23 +1,110 @@
+'use client';
+
 import * as React from 'react';
 import { cn } from '../lib/utils';
+import {
+  FieldFrame,
+  composeRefs,
+  fieldVariants,
+  insertAtCaret,
+  setNativeValue,
+  trailingPadClass,
+  useFieldValue,
+  type FieldVariantProps,
+} from './field';
 
-export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+export interface TextareaProps
+  extends Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'size'>,
+    FieldVariantProps {
   error?: boolean;
+  showClear?: boolean;
+  showPaste?: boolean;
+  leadingIcon?: React.ReactNode;
+  trailingIcon?: React.ReactNode;
 }
 
 const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
-  ({ className, error, ...props }, ref) => {
+  (
+    {
+      className,
+      size,
+      radius,
+      error,
+      showClear = false,
+      showPaste = false,
+      leadingIcon,
+      trailingIcon,
+      disabled,
+      value,
+      defaultValue,
+      onChange,
+      ...props
+    },
+    ref
+  ) => {
+    const areaRef = React.useRef<HTMLTextAreaElement | null>(null);
+    const { current, setUncontrolled } = useFieldValue(value, defaultValue);
+    const trailingCount =
+      Number(Boolean(trailingIcon)) + Number(Boolean(showPaste)) + Number(Boolean(showClear));
+
+    const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+      setUncontrolled(event.target.value);
+      onChange?.(event);
+    };
+
+    const handleClear = () => {
+      const el = areaRef.current;
+      if (!el) return;
+      setNativeValue(el, '');
+      setUncontrolled('');
+      el.focus();
+    };
+
+    const handlePaste = async () => {
+      const el = areaRef.current;
+      if (!el) return;
+      try {
+        const text = await navigator.clipboard.readText();
+        if (!text) return;
+        insertAtCaret(el, text);
+        setUncontrolled(el.value);
+        el.focus();
+      } catch {
+        el.focus();
+      }
+    };
+
     return (
-      <textarea
-        className={cn(
-          'flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
-          error && 'border-destructive focus-visible:ring-destructive',
-          className
-        )}
-        ref={ref}
-        aria-invalid={error ? 'true' : undefined}
-        {...props}
-      />
+      <FieldFrame
+        className={className}
+        error={error}
+        disabled={disabled}
+        leadingIcon={leadingIcon}
+        trailingIcon={trailingIcon}
+        showClear={showClear}
+        showPaste={showPaste}
+        hasValue={current.length > 0}
+        multiline
+        onClear={handleClear}
+        onPaste={() => {
+          void handlePaste();
+        }}
+      >
+        <textarea
+          {...props}
+          ref={composeRefs(ref, areaRef)}
+          {...(value !== undefined ? { value } : { defaultValue })}
+          disabled={disabled}
+          aria-invalid={error ? true : props['aria-invalid']}
+          onChange={handleChange}
+          className={cn(
+            fieldVariants({ size, radius, multiline: true }),
+            leadingIcon && 'ps-9',
+            trailingPadClass(trailingCount),
+            className
+          )}
+        />
+      </FieldFrame>
     );
   }
 );

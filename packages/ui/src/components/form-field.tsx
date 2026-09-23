@@ -29,12 +29,12 @@ const FormField = React.forwardRef<HTMLDivElement, FormFieldProps>(
         )}
         {children}
         {hint && !error && (
-          <p id={hintId} className="text-sm text-muted-foreground">
+          <p id={hintId} className="text-body-sm text-muted-foreground">
             {hint}
           </p>
         )}
         {error && (
-          <p id={errorId} className="text-sm text-destructive">
+          <p id={errorId} className="text-body-sm text-destructive">
             {error}
           </p>
         )}
