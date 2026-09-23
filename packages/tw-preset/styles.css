@@ -40,8 +40,29 @@
   --radius-xl: calc(var(--radius) + 4px);
 
   /* Additive. Do not remap text-xs/sm/base/lg, font-medium, or leading-* —
-     existing UI (including Button `text-sm font-medium`) keeps Tailwind defaults. */
+     existing utilities keep Tailwind defaults; UI roles opt in via text-label*. */
   --font-weight-regular: var(--font-weight-regular);
+
+  /* Motion seed — durations map to `duration-press` / `duration-state` utilities.
+     `--ease-out` lives on :root so components can use var(--ease-out) without
+     circularly remapping Tailwind's built-in ease-out. */
+  --transition-duration-press: var(--duration-press);
+  --transition-duration-state: var(--duration-state);
+}
+
+:root {
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --duration-press: 150ms;
+  --duration-state: 200ms;
+  --scale-press: 0.97;
+}
+
+@custom-variant fine-hover {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      @slot;
+    }
+  }
 }
 
 /* Semantic UI type roles (size + weight + leading + body family). */
@@ -115,14 +136,91 @@
   }
 }
 
-/* Reduced motion */
+/* Button motion — named properties, interruptible transitions, press + loading morph. */
+.rtds-button {
+  transition:
+    color var(--duration-state) ease,
+    background-color var(--duration-state) ease,
+    border-color var(--duration-state) ease,
+    box-shadow var(--duration-state) ease,
+    filter var(--duration-state) ease,
+    opacity var(--duration-state) ease;
+}
+
+.rtds-button-press {
+  transition:
+    transform var(--duration-press) var(--ease-out),
+    color var(--duration-state) ease,
+    background-color var(--duration-state) ease,
+    border-color var(--duration-state) ease,
+    box-shadow var(--duration-state) ease,
+    filter var(--duration-state) ease,
+    opacity var(--duration-state) ease;
+}
+
+.rtds-button-press:active {
+  transform: scale(var(--scale-press));
+}
+
+.rtds-button-content {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition:
+    opacity var(--duration-state) ease,
+    filter var(--duration-state) ease;
+}
+
+.rtds-button[data-loading] .rtds-button-content {
+  opacity: 0;
+  filter: blur(2px);
+}
+
+.rtds-button-spinner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity var(--duration-state) ease,
+    filter var(--duration-state) ease;
+}
+
+.rtds-button[data-loading] .rtds-button-spinner {
+  opacity: 1;
+}
+
+/* Reduced motion: drop movement, keep color/opacity. Keyframes (spinners) still collapse. */
 @media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-press: 0ms;
+    --scale-press: 1;
+  }
+
+  .rtds-button-press:active {
+    transform: none;
+  }
+
+  .rtds-button-content,
+  .rtds-button-spinner {
+    filter: none;
+  }
+
+  .rtds-button[data-loading] .rtds-button-content,
+  .rtds-button[data-loading] .rtds-button-spinner {
+    filter: none;
+  }
+
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
 }

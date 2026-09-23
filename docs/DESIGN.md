@@ -124,10 +124,20 @@ Derive sm/md/lg/xl as: `calc(var(--radius) ± n px)`
 
 ## Motion
 
-- **Duration:** 150ms micro, 200ms default, 300ms overlay
-- **Easing:** `cubic-bezier(0.2, 0, 0, 1)`
-- **Hover:** color/border only by default
-- **Reduced motion:** `@media (prefers-reduced-motion: reduce)` disables transforms/transitions
+Shared CSS variables in `@rtds/tw-preset/styles.css` (`:root`). Primitives should reuse these — do not fork timings inside a component.
+
+| Token | Value | Use |
+|-------|-------|-----|
+| `--ease-out` | `cubic-bezier(0.23, 1, 0.32, 1)` | Press and other UI movement |
+| `--duration-press` | `150ms` | Button press scale (zeroed under reduced motion) |
+| `--duration-state` | `200ms` | Color, opacity, loading morph (kept under reduced motion) |
+| `--scale-press` | `0.97` | `:active` scale (not `link`) |
+
+Legacy overlay budget remains 300ms. Older `cubic-bezier(0.2, 0, 0, 1)` (`rtds-ease`) is still in the JS preset for non-Button surfaces until those primitives are reformed.
+
+- **Hover:** color/border by default; `default` / `secondary` Button may add gated brightness + shadow
+- **Hover motion gate:** `@media (hover: hover) and (pointer: fine)` (`fine-hover:` variant)
+- **Reduced motion:** drop transform/scale and blur; keep color and opacity. Do not use `transition: all`.
 
 ### Forbidden in v1
 

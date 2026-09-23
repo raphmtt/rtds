@@ -1,33 +1,51 @@
 import * as React from 'react';
 import { Button as BaseButton } from '@base-ui/react/button';
 import { cva, type VariantProps } from 'class-variance-authority';
+import { Loader2 } from 'lucide-react';
 import { cn } from '../lib/utils';
+import { Icon } from './icon';
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
+  'rtds-button relative inline-flex items-center justify-center whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
   {
     variants: {
       variant: {
-        default: 'bg-primary text-primary-foreground hover:bg-primary/90',
+        default:
+          'bg-primary text-primary-foreground hover:bg-primary/90 fine-hover:shadow-sm fine-hover:brightness-105',
         destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
         outline: 'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
-        secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
+        secondary:
+          'bg-secondary text-secondary-foreground hover:bg-secondary/80 fine-hover:shadow-sm fine-hover:brightness-105',
         ghost: 'hover:bg-accent hover:text-accent-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
       },
       size: {
-        default: 'h-10 px-4 py-2',
-        sm: 'h-9 rounded-md px-3',
-        lg: 'h-11 rounded-md px-8 min-h-[44px]',
+        default: 'h-10 px-4 py-2 text-label',
+        sm: 'h-9 px-3 text-label-sm',
+        lg: 'h-11 px-8 text-label-lg',
         icon: 'h-10 w-10',
+      },
+      radius: {
+        none: 'rounded-none',
+        sm: 'rounded-sm',
+        md: 'rounded-md',
+        lg: 'rounded-lg',
+        full: 'rounded-full',
       },
       fullWidth: {
         true: 'w-full',
       },
     },
+    compoundVariants: [
+      {
+        variant: ['default', 'destructive', 'outline', 'secondary', 'ghost'],
+        class: 'rtds-button-press',
+      },
+    ],
     defaultVariants: {
       variant: 'default',
       size: 'default',
+      radius: 'md',
     },
   }
 );
@@ -37,6 +55,8 @@ export interface ButtonProps
     VariantProps<typeof buttonVariants> {
   className?: string;
   loading?: boolean;
+  /** Optional visual label in the loading overlay. Default: spinner only. */
+  loadingText?: string;
 }
 
 const Button = React.forwardRef<HTMLElement, ButtonProps>(
@@ -45,8 +65,10 @@ const Button = React.forwardRef<HTMLElement, ButtonProps>(
       className,
       variant,
       size,
+      radius,
       fullWidth,
       loading = false,
+      loadingText,
       children,
       disabled,
       focusableWhenDisabled,
@@ -58,39 +80,20 @@ const Button = React.forwardRef<HTMLElement, ButtonProps>(
       <BaseButton
         {...props}
         ref={ref}
-        className={cn(buttonVariants({ variant, size, fullWidth }), className)}
+        className={cn(buttonVariants({ variant, size, radius, fullWidth }), className)}
         disabled={disabled || loading}
         focusableWhenDisabled={focusableWhenDisabled ?? loading}
         aria-busy={loading || undefined}
+        data-loading={loading || undefined}
       >
-        {loading ? (
-          <>
-            <svg
-              className="mr-2 -ml-1 h-4 w-4 animate-spin"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-              />
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-              />
-            </svg>
-            Loading...
-          </>
-        ) : (
-          children
-        )}
+        <span className="rtds-button-content">{children}</span>
+        <span className="rtds-button-spinner" aria-hidden="true">
+          <Icon
+            icon={Loader2}
+            className={loading ? 'animate-spin motion-reduce:animate-none' : undefined}
+          />
+          {loadingText ? <span className="text-current">{loadingText}</span> : null}
+        </span>
       </BaseButton>
     );
   }

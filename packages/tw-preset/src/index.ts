@@ -106,9 +106,12 @@ export const rtdsPreset = {
         micro: '150ms',
         default: '200ms',
         overlay: '300ms',
+        press: 'var(--duration-press)',
+        state: 'var(--duration-state)',
       },
       transitionTimingFunction: {
         'rtds-ease': 'cubic-bezier(0.2, 0, 0, 1)',
+        out: 'var(--ease-out)',
       },
     },
   },

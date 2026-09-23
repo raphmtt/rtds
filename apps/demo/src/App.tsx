@@ -100,6 +100,7 @@ import {
   Twitter,
   Inbox,
   Info,
+  Plus,
 } from 'lucide-react';
 
 const Logo = () => (
@@ -263,7 +264,11 @@ function Landing() {
             <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
               <Button size="sm">Small</Button>
               <Button size="lg">Large</Button>
-              <Button loading>Loading</Button>
+              <Button>
+                <Icon icon={Plus} />
+                Add item
+              </Button>
+              <Button loading>Save changes</Button>
               <Button disabled>Disabled</Button>
             </div>
           </Container>
