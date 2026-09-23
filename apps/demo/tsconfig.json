@@ -4,9 +4,11 @@
     "outDir": "./dist",
     "noEmit": true,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@rtds-config": ["../../rtds.config.ts"],
+      "lenis": ["./node_modules/lenis"]
     }
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "../../tooling/playground/lenis-css.d.ts"],
   "exclude": ["node_modules", "dist"]
 }

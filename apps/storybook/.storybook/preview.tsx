@@ -1,6 +1,12 @@
 import type { Preview } from '@storybook/react';
 import { withThemeByDataAttribute, withThemeByClassName } from '@storybook/addon-themes';
 import '../styles.css';
+import config from '@rtds-config';
+import { initSmoothScroll } from '../../../tooling/playground/initSmoothScroll';
+
+if (typeof window !== 'undefined') {
+  void initSmoothScroll(config);
+}
 
 const VIEWPORTS = {
   mobile: {

@@ -24,6 +24,23 @@ Root scripts (`package.json`): `dev`, `build`, `lint`, `typecheck`, `test`, `tok
 
 ---
 
+## Playground config (`rtds.config.ts`)
+
+Monorepo DX config at repo root. **Not** part of published packages.
+
+### Smooth scroll (Lenis)
+
+1. Open `rtds.config.ts`
+2. Set `scroll.smooth: true`
+3. Restart `pnpm --filter demo dev` (or Storybook)
+4. Leave `false` (default) for normal native scroll
+
+Honors `prefers-reduced-motion: reduce` (Lenis will not start).
+
+Optional tuning: `lerp` (default 0.1), `wheelMultiplier` (default 0.7).
+
+---
+
 ## Boundaries
 
 - Do not redesign tokens or visuals unless asked.
