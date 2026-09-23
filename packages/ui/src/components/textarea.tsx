@@ -4,10 +4,10 @@ import * as React from 'react';
 import { cn } from '../lib/utils';
 import {
   FieldFrame,
+  commitFieldValue,
   composeRefs,
   fieldVariants,
   insertAtCaret,
-  setNativeValue,
   trailingPadClass,
   useFieldValue,
   type FieldVariantProps,
@@ -55,9 +55,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     const handleClear = () => {
       const el = areaRef.current;
       if (!el) return;
-      setNativeValue(el, '');
-      setUncontrolled('');
-      el.focus();
+      commitFieldValue(el, '', setUncontrolled);
     };
 
     const handlePaste = async () => {
@@ -100,8 +98,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           className={cn(
             fieldVariants({ size, radius, multiline: true }),
             leadingIcon && 'ps-9',
-            trailingPadClass(trailingCount),
-            className
+            trailingPadClass(trailingCount)
           )}
         />
       </FieldFrame>

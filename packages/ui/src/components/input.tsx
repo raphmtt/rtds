@@ -6,10 +6,10 @@ import { cn } from '../lib/utils';
 import {
   FieldFrame,
   allowsFieldActions,
+  commitFieldValue,
   composeRefs,
   fieldVariants,
   insertAtCaret,
-  setNativeValue,
   trailingPadClass,
   useFieldValue,
   type FieldVariantProps,
@@ -73,9 +73,7 @@ const Input = React.forwardRef<HTMLElement, InputProps>(
     const handleClear = () => {
       const el = control();
       if (!el) return;
-      setNativeValue(el, '');
-      setUncontrolled('');
-      el.focus();
+      commitFieldValue(el, '', setUncontrolled);
     };
 
     const handlePaste = async () => {
@@ -119,8 +117,7 @@ const Input = React.forwardRef<HTMLElement, InputProps>(
           className={cn(
             fieldVariants({ size, radius, multiline: false }),
             leadingIcon && 'ps-9',
-            trailingPadClass(trailingCount),
-            className
+            trailingPadClass(trailingCount)
           )}
         />
       </FieldFrame>

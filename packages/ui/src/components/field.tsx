@@ -85,7 +85,19 @@ function setNativeValue(el: HTMLInputElement | HTMLTextAreaElement, next: string
   const tracker = (el as unknown as { _valueTracker?: { setValue: (value: string) => void } })
     ._valueTracker;
   tracker?.setValue(previous);
+  // One native `input` event — same path as typing. React `onChange` and Base UI
+  // `onValueChange` each fire once; do not also invoke them from clear/paste.
   el.dispatchEvent(new Event('input', { bubbles: true }));
+}
+
+function commitFieldValue(
+  el: HTMLInputElement | HTMLTextAreaElement,
+  next: string,
+  setUncontrolled: (value: string) => void
+) {
+  setNativeValue(el, next);
+  setUncontrolled(next);
+  el.focus();
 }
 
 function insertAtCaret(el: HTMLInputElement | HTMLTextAreaElement, text: string) {
@@ -221,7 +233,7 @@ function FieldFrame({
     <div
       ref={frameRef}
       data-invalid={error || undefined}
-      className={cn('rtds-field relative w-full', className)}
+      className={cn('rtds-field relative w-full min-w-0', className)}
       onAnimationEnd={onAnimationEnd}
       onInvalidCapture={() => triggerShake()}
     >
@@ -273,10 +285,10 @@ function FieldFrame({
 export {
   FieldFrame,
   allowsFieldActions,
+  commitFieldValue,
   composeRefs,
   fieldVariants,
   insertAtCaret,
-  setNativeValue,
   trailingPadClass,
   useFieldValue,
 };
