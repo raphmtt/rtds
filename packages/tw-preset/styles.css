@@ -214,6 +214,44 @@
   transform: scale(var(--scale-press));
 }
 
+/* Checkbox motion — named properties; indicator enter/exit; fine-pointer press (0.98). */
+.rtds-checkbox {
+  transition:
+    border-color var(--duration-state) ease,
+    background-color var(--duration-state) ease,
+    box-shadow var(--duration-state) ease,
+    transform var(--duration-press) var(--ease-out);
+}
+
+/* Expand the hit target to 44px without growing the painted box. */
+.rtds-checkbox::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2.75rem;
+  height: 2.75rem;
+  translate: -50% -50%;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .rtds-checkbox:active:not([data-disabled]) {
+    transform: scale(0.98);
+  }
+}
+
+.rtds-checkbox-indicator {
+  transition:
+    opacity var(--duration-press) var(--ease-out),
+    transform var(--duration-press) var(--ease-out);
+}
+
+.rtds-checkbox-indicator[data-starting-style],
+.rtds-checkbox-indicator[data-ending-style] {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
 @keyframes rtds-field-shake {
   0% {
     transform: translateX(0);
@@ -268,6 +306,19 @@
   }
 
   .rtds-field-action:active:not(:disabled) {
+    transform: none;
+  }
+
+  .rtds-checkbox:active {
+    transform: none;
+  }
+
+  .rtds-checkbox-indicator {
+    transition: opacity var(--duration-state) ease;
+  }
+
+  .rtds-checkbox-indicator[data-starting-style],
+  .rtds-checkbox-indicator[data-ending-style] {
     transform: none;
   }
 

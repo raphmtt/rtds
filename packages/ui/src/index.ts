@@ -19,7 +19,8 @@ export type { TextareaProps } from './components/textarea';
 
 export { Label } from './components/label';
 
-export { Checkbox } from './components/checkbox';
+export { Checkbox, checkboxVariants } from './components/checkbox';
+export type { CheckboxProps, CheckboxSize, CheckboxRadius } from './components/checkbox';
 
 export {
   Select,
