@@ -278,8 +278,9 @@
   }
 }
 
+/* Thumb position is Tailwind's `translate` property, not `transform`. */
 .rtds-switch-thumb {
-  transition: transform var(--duration-state) var(--ease-in-out);
+  transition: translate var(--duration-state) var(--ease-in-out);
 }
 
 /* Select motion — field chrome; chevron rotate; popup origin-aware scale. */
