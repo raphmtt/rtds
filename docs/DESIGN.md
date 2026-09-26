@@ -129,6 +129,7 @@ Shared CSS variables in `@rtds/tw-preset/styles.css` (`:root`). Primitives shoul
 | Token | Value | Use |
 |-------|-------|-----|
 | `--ease-out` | `cubic-bezier(0.23, 1, 0.32, 1)` | Press and other UI movement |
+| `--ease-in-out` | `cubic-bezier(0.77, 0, 0.175, 1)` | On-screen movement (switch thumb) |
 | `--duration-press` | `150ms` | Button press scale (zeroed under reduced motion) |
 | `--duration-state` | `200ms` | Color, opacity, loading morph (kept under reduced motion) |
 | `--scale-press` | `0.97` | `:active` scale (not `link`) |

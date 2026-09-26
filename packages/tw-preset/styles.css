@@ -52,6 +52,7 @@
 
 :root {
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
   --duration-press: 150ms;
   --duration-state: 200ms;
   --scale-press: 0.97;
@@ -252,6 +253,36 @@
   transform: scale(0.95);
 }
 
+/* Switch motion — track color/border; thumb travel; fine-pointer press (0.98). */
+.rtds-switch {
+  transition:
+    background-color var(--duration-state) ease,
+    border-color var(--duration-state) ease,
+    box-shadow var(--duration-state) ease,
+    transform var(--duration-press) var(--ease-out);
+}
+
+.rtds-switch::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max(100%, 2.75rem);
+  height: max(2.75rem, 100%);
+  translate: -50% -50%;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .rtds-switch:active:not([data-disabled]) {
+    transform: scale(0.98);
+  }
+}
+
+/* Thumb position is Tailwind's `translate` property, not `transform`. */
+.rtds-switch-thumb {
+  transition: translate var(--duration-state) var(--ease-in-out);
+}
+
 /* Select motion — field chrome; chevron rotate; popup origin-aware scale. */
 .rtds-select-trigger {
   transition:
@@ -355,6 +386,14 @@
   .rtds-checkbox-indicator[data-starting-style],
   .rtds-checkbox-indicator[data-ending-style] {
     transform: none;
+  }
+
+  .rtds-switch:active {
+    transform: none;
+  }
+
+  .rtds-switch-thumb {
+    transition: none;
   }
 
   .rtds-select-trigger:active {

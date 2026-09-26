@@ -39,7 +39,8 @@ export type {
   SelectTriggerRadius,
 } from './components/select';
 
-export { Switch } from './components/switch';
+export { Switch, switchVariants } from './components/switch';
+export type { SwitchProps, SwitchSize } from './components/switch';
 
 export { Badge, badgeVariants } from './components/badge';
 export type { BadgeProps } from './components/badge';
