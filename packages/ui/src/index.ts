@@ -17,7 +17,8 @@ export type { InputProps, FieldVariantProps } from './components/input';
 export { Textarea } from './components/textarea';
 export type { TextareaProps } from './components/textarea';
 
-export { Label } from './components/label';
+export { Label, labelVariants } from './components/label';
+export type { LabelProps, LabelSize } from './components/label';
 
 export { Checkbox, checkboxVariants } from './components/checkbox';
 export type { CheckboxProps, CheckboxSize, CheckboxRadius } from './components/checkbox';
@@ -139,5 +140,6 @@ export { NewsletterForm } from './components/marketing/newsletter-form';
 
 // Feedback
 export { FormField } from './components/form-field';
+export type { FormFieldProps } from './components/form-field';
 export { EmptyState } from './components/empty-state';
 export { ErrorState } from './components/error-state';
