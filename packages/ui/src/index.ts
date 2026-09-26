@@ -91,6 +91,7 @@ export {
 } from './components/accordion';
 
 export { Tabs, TabsList, TabsTrigger, TabsContent } from './components/tabs';
+export type { TabsListProps, TabsListRadius } from './components/tabs';
 
 export {
   Tooltip,
