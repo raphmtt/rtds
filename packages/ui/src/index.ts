@@ -31,6 +31,12 @@ export {
   SelectLabel,
   SelectItem,
   SelectSeparator,
+  selectTriggerVariants,
+} from './components/select';
+export type {
+  SelectTriggerProps,
+  SelectTriggerSize,
+  SelectTriggerRadius,
 } from './components/select';
 
 export { Switch } from './components/switch';

@@ -18,11 +18,6 @@ import {
   DialogTitle,
   DialogTrigger,
   Label,
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
   Separator,
   Sheet,
   SheetContent,
@@ -96,22 +91,6 @@ export const SheetExample: Story = {
         </SheetHeader>
       </SheetContent>
     </Sheet>
-  ),
-};
-
-export const SelectExample: Story = {
-  name: 'Select',
-  render: () => (
-    <Select defaultValue="atlas">
-      <SelectTrigger className="w-44" aria-label="Niche">
-        <SelectValue placeholder="Select" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value="atlas">Atlas</SelectItem>
-        <SelectItem value="folio">Folio</SelectItem>
-        <SelectItem value="maison">Maison</SelectItem>
-      </SelectContent>
-    </Select>
   ),
 };
 
