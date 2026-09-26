@@ -315,6 +315,21 @@
   animation: rtds-field-shake 320ms linear;
 }
 
+@keyframes rtds-form-error-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.rtds-form-error {
+  animation: rtds-form-error-in var(--duration-state) var(--ease-out);
+}
+
 /* Reduced motion: drop movement, keep color/opacity. Keyframes (spinners) still collapse. */
 @media (prefers-reduced-motion: reduce) {
   :root {
@@ -337,6 +352,10 @@
   }
 
   .rtds-field[data-shake] {
+    animation: none;
+  }
+
+  .rtds-form-error {
     animation: none;
   }
 
