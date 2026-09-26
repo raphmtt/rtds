@@ -69,6 +69,7 @@ export {
   DialogTitle,
   DialogDescription,
 } from './components/dialog';
+export type { DialogContentProps, DialogContentRadius } from './components/dialog';
 
 export {
   Sheet,
