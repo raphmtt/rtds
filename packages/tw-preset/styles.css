@@ -287,6 +287,33 @@
   transform: scale(0.96);
 }
 
+/* Dialog — overlay fade; popup opacity + scale (not transform, avoids centering translate). */
+.rtds-dialog-overlay {
+  transition: opacity var(--duration-state) var(--ease-out);
+}
+
+.rtds-dialog-overlay[data-starting-style],
+.rtds-dialog-overlay[data-ending-style] {
+  opacity: 0;
+}
+
+.rtds-dialog-content {
+  scale: 1;
+  transition:
+    opacity var(--duration-state) var(--ease-out),
+    scale var(--duration-state) var(--ease-out);
+}
+
+.rtds-dialog-content[data-starting-style],
+.rtds-dialog-content[data-ending-style] {
+  opacity: 0;
+  scale: 0.96;
+}
+
+.rtds-dialog-close {
+  transition: opacity var(--duration-state) ease;
+}
+
 @keyframes rtds-field-shake {
   0% {
     transform: translateX(0);
@@ -376,6 +403,16 @@
   .rtds-select-content[data-starting-style],
   .rtds-select-content[data-ending-style] {
     transform: none;
+  }
+
+  .rtds-dialog-content {
+    scale: 1;
+    transition: opacity var(--duration-state) ease;
+  }
+
+  .rtds-dialog-content[data-starting-style],
+  .rtds-dialog-content[data-ending-style] {
+    opacity: 0;
   }
 
   *,
